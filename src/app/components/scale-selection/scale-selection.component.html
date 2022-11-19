@@ -1,0 +1,35 @@
+<div id="selection-container">
+  <mat-form-field id="root-selector" appearance="fill">
+    <mat-label>Root Note</mat-label>
+    <mat-select (selectionChange)="changeRoot($event)" [(value)]="root">
+      <mat-option *ngFor="let note of chromaticScale" [value]="note">
+        {{note}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field id="mode-selector" appearance="fill">
+    <mat-label>Mode</mat-label>
+    <mat-select (selectionChange)="changeMode($event)" [(value)]="selectedMode">
+      <mat-option *ngFor="let mode of modes" [value]="mode">
+        {{mode}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<ng-container *ngIf="(mode$ | async) as mode">
+  <mat-card>
+    <mat-card-content>
+      <div id="roman-num-container">
+        <p class="roman-numeral" *ngFor="let rn of (mode.intervalRoman | async)">{{rn}}</p>
+      </div>
+      <div id="root-container">
+        <p *ngFor="let note of mode.notes" class="root-note">{{note}}</p>
+      </div>
+      <div id="degree-container">
+        <p class="degree" *ngFor="let degree of mode.degree">{{degree}}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
